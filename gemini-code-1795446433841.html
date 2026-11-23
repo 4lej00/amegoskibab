@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigos Kebab | Callosa d'en Sarrià</title>
+    <style>
+        :root {
+            --primary: #e63946;
+            --secondary: #f4a261;
+            --dark: #121212;
+            --card-bg: #1e1e1e;
+            --text: #f1faee;
+            --text-muted: #a8a8a8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Navegación */
+        header {
+            background-color: rgba(18, 18, 18, 0.95);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), 
+                        url('https://images.unsplash.com/photo-1633321702518-7feccafb94d5?auto=format&fit=crop&w=1400&q=80') center/cover;
+            min-height: 75vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s, background 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #d62828;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e76f51;
+            transform: translateY(-2px);
+        }
+
+        /* Secciones generales */
+        section {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2.section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+        }
+
+        /* Filtros de Carta */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1px solid #333;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Grid de Productos */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .menu-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #2c2c2c;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--secondary);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .item-price {
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .item-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--secondary);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Info y Ubicación */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #2c2c2c;
+        }
+
+        .info-box h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+        }
+
+        .info-box li {
+            margin-bottom: 0.6rem;
+            color: #ddd;
+        }
+
+        .map-placeholder {
+            background: #2a2a2a;
+            border-radius: 8px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1.5rem;
+            border: 1px dashed var(--secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid #222;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">AMIGOS <span>KEBAB</span></a>
+        <nav>
+            <a href="#carta">Nuestra Carta</a>
+            <a href="#ubicacion">Horario y Dónde Estamos</a>
+            <a href="tel:+34600000000" style="color: var(--secondary);">📞 Llamar</a>
+        </nav>
+    </header>
+
+    <section class="hero" style="max-width: 100%;">
+        <h1>El mejor sabor de <span>Callosa d'en Sarrià</span></h1>
+        <p>Carne asada al momento, pan recién horneado, salsas caseras y raciones generosas. Ven a vernos o pide para llevar.</p>
+        <div class="btn-group">
+            <a href="#carta" class="btn btn-primary">Ver la Carta</a>
+            <a href="tel:+34600000000" class="btn btn-secondary">Pedir por Teléfono</a>
+        </div>
+    </section>
+
+    <section id="carta">
+        <h2 class="section-title">Nuestra Carta</h2>
+        
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterMenu('todos', this)">Todos</button>
+            <button class="filter-btn" onclick="filterMenu('kebabs', this)">Kebabs & Dürüm</button>
+            <button class="filter-btn" onclick="filterMenu('platos', this)">Platos & Menús</button>
+            <button class="filter-btn" onclick="filterMenu('extras', this)">Pizzas & Complementos</button>
+        </div>
+
+        <div class="menu-grid" id="menu-container">
+            <!-- Kebabs & Dürüm -->
+            <div class="menu-item" data-category="kebabs">
+                <div>
+                    <div class="item-header">
+                        <span class="item-title">Döner Kebab Clásico</span>
+                        <span class="item-price">4,50 €</span>
+                    </div>
+                    <p class="item-desc">Pan de pita crujiente con carne de pollo, ternera o mixto, lechuga, tomate, cebolla y nuestras salsas blanca y picante.</p>
+                </div>
+                <span class="tag">Top Ventas</span>
+            </div>
+
+            <div class="menu-item" data-category="kebabs">
+                <div>
+                    <div class="item-header">
+                        <span class="item-title">Dürüm XL Amigos</span>
+                        <span class="item-price">5,50 €</span>
+                    </div>
+                    <p class="item-desc">Tortilla de trigo gigante enrollada con doble de carne, queso feta, verduras frescas y salsa especial de la casa.</p>
+                </div>
+                <span class="tag">Recomendado</span>
+            </div>
+
+            <div class="menu-item" data-category="kebabs">
+                <div>
+                    <div class="item-header">
+                        <span class="item-title">Lahmacun (Pizza Turca)</span>
+                        <span class="item-price">6,00 €</span>
+                    </div>
+                    <p class="item-desc">Base fina especiada enrollada con carne de kebab al gusto, ensalada fresca y salsas.</p>
+                </div>
+                <span class="tag">Especialidad</span>
+            </div>
+
+            <!-- Platos & Menús -->
+            <div class="menu-item" data-category="platos">
+                <div>
+                    <div class="item-header">
+                        <span class="item-title">Plato Kebab Completo</span>
+                        <span class="item-price">7,50 €</span>
+                    </div>
+                    <p class="item-
